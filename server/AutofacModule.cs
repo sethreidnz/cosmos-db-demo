@@ -11,12 +11,11 @@ namespace CosmosDbDemo.Server
 {
   public class AutofacModule : Module
   {
-    private readonly IConfigurationRoot _configuration;
-
     protected override void Load(ContainerBuilder builder)
     {
       // register the DocumentClient for DocumentDB API
-      builder.Register(c => {
+      builder.Register(c =>
+      {
         var cosmosDbClient = c.Resolve<IOptions<CosmosDbOptions>>().Value;
         return new DocumentClient(new Uri(cosmosDbClient.EndpointUri), cosmosDbClient.PrimaryKey);
       }).SingleInstance();
