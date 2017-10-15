@@ -2,8 +2,8 @@
 using Autofac;
 using CosmosDbDemo.Server.Clients;
 using CosmosDbDemo.Server.Options;
+using CosmosDbDemo.Server.Services;
 using Microsoft.Azure.Documents.Client;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -30,6 +30,10 @@ namespace CosmosDbDemo.Server
         databaseClient.Initialize();
         return databaseClient;
       }).As<IDatabaseClient>();
+
+      // services
+      builder.Register(c => new UserService(c.Resolve<IOptions<CosmosDbOptions>>(), c.Resolve<IDatabaseClient>()))
+        .As<IUserService>();
     }
   }
 }

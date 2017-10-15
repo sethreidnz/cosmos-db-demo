@@ -7,7 +7,7 @@ namespace CosmosDbDemo.Server.Clients
 {
   public interface IDatabaseClient
   {
-    Task<T> CreateDocument<T>(string databaseName, string collectionName, object document);
+    Task<T> CreateDocument<T>(string databaseName, string collectionName, T document);
 
     Task<T> GetDocumentByExpression<T>(string databaseName, string collectionName, Expression<Func<T, bool>> expression);
 
