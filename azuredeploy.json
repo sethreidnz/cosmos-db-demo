@@ -90,6 +90,10 @@
               {
                 "Value": "[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', parameters('databaseAccountName')), '2015-04-08').primaryMasterKey]",
                 "Name": "CosmosDB:PrimaryKey"
+              },
+              {
+                "Value": "CosmosDB:Databases:CosmosDbDemo",
+                "Name": "CosmosDbDemo"
               }
             ]
           }
