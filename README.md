@@ -19,6 +19,8 @@ dotnet --version
 
 ## Running the API
 
+> *NOTE:* You need to start the CosmosDB emulator before running the API
+
 To run the server in a few ways:
 
 - Open the folder in Visual Studio Code and press F5
@@ -31,3 +33,11 @@ To run the server in a few ways:
   ```
 
   > *NOTE:* you will also need to set the environment variable `ASPNETCORE_ENVIRONMENT` to `Development` if you want to run the server from the command line.
+
+## Deploy to Azure
+
+You can deploy this directly to azure
+
+>*NOTE*: This will create a free tier web app service and a CosmosDB instance
+
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
