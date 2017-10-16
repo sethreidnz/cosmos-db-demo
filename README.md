@@ -38,6 +38,6 @@ To run the server in a few ways:
 
 You can deploy this directly to azure
 
->*NOTE*: This will create a free tier web app service and a CosmosDB instance
+>*NOTE*: This will create a App Service Plan and a CosmosDB account
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
