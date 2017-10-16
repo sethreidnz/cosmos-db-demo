@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CosmosDbDemo.Server.Constants
+﻿namespace CosmosDbDemo.Server.Constants
 {
   public static class DatabaseConstants
   {

@@ -27,7 +27,7 @@ namespace CosmosDbDemo.Server
           c.Resolve<IOptions<CosmosDbOptions>>(),
           c.Resolve<ILogger<DocumentDbClient>>(),
           c.Resolve<DocumentClient>());
-        databaseClient.Initialize();
+        databaseClient.Initialize().Wait();
         return databaseClient;
       }).As<IDatabaseClient>();
 

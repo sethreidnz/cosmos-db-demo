@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CosmosDbDemo.Server.Models;
 using CosmosDbDemo.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +16,13 @@ namespace CosmosDbDemo.Server.Controllers
     }
 
     // GET api/profile/me
-    [HttpGet]
-    public IActionResult GetCurrentUser()
+    [HttpGet("{email}")]
+    public async Task<IActionResult> GetUser(string email)
     {
-      var userEmail = "test@test.com";
-      var user = _userService.GetUser(userEmail);
+      var user = await _userService.GetUserByEmail(email);
       if (user == null)
       {
-        return Unauthorized();
+        return NotFound(email);
       }
 
       return Ok(user);
@@ -30,36 +30,25 @@ namespace CosmosDbDemo.Server.Controllers
 
     // POST api/profile
     [HttpPost]
-    public IActionResult Post([FromBody]UserModel updatedUser)
+    public async Task<IActionResult> Post([FromBody]UserModel updatedUser)
     {
-      if (string.IsNullOrWhiteSpace(updatedUser.Email))
-      {
-        return BadRequest();
-      }
-
-      var users = _userService.CreateUserIfDoesntExist(updatedUser);
-      return Ok(users);
+      var user = await _userService.CreateUserIfDoesntExist(updatedUser);
+      return Ok(user);
     }
 
     // PUT api/profile/test@email.com
     [HttpPut("{email}")]
-    public IActionResult Put(string email, [FromBody]UserModel updatedUser)
+    public async Task<IActionResult> Put(string email, [FromBody]UserModel updatedUser)
     {
-      var user = _userService.GetUser(email);
-      if (user == null)
-      {
-        // TODO
-      }
-
-      var users = _userService.UpdateUser(updatedUser);
-      return Ok(user);
+      updatedUser = await _userService.UpdateUser(updatedUser);
+      return Ok(updatedUser);
     }
 
     // DELETE api/profile/5
     [HttpDelete("{email}")]
-    public IActionResult Delete(string email)
+    public async Task<IActionResult> Delete(string email)
     {
-      _userService.DeleteUser(email);
+      await _userService.DeleteIfExists(email);
       return Ok();
     }
   }

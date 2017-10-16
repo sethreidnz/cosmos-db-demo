@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using CosmosDbDemo.Server.Clients;
 using CosmosDbDemo.Server.Constants;
+using CosmosDbDemo.Server.Extensions;
 using CosmosDbDemo.Server.Models;
 using CosmosDbDemo.Server.Options;
 using Microsoft.Extensions.Options;
@@ -28,7 +28,7 @@ namespace CosmosDbDemo.Server.Services
       _databaseClient = databaseClient;
     }
 
-    public Task<UserModel> GetUser(string email)
+    public Task<UserModel> GetUserByEmail(string email)
     {
       if (string.IsNullOrWhiteSpace(email))
       {
@@ -39,39 +39,51 @@ namespace CosmosDbDemo.Server.Services
       return user;
     }
 
-    public Task<UserModel> CreateUserIfDoesntExist(UserModel newUser)
+    public async Task<UserModel> CreateUserIfDoesntExist(UserModel newUser)
     {
       ValidateUserHasEmail(newUser);
 
-      var user = _databaseClient.GetDocumentByExpression<UserModel>(_databaseName, _userCollectionName, u => u.Email == newUser.Email);
+      var user = await _databaseClient.GetDocumentByExpression<UserModel>(_databaseName, _userCollectionName, u => u.Email == newUser.Email);
       if (user == null)
       {
-        user = _databaseClient.CreateDocument(_databaseName, _userCollectionName, newUser);
+        user = await _databaseClient.CreateDocument(_databaseName, _userCollectionName, newUser);
       }
 
       return user;
     }
 
-    public Task<UserModel> UpdateUser(UserModel userModel)
+    public async Task<UserModel> UpdateUser(UserModel updatedUser)
     {
-      ValidateUserHasEmail(userModel);
+      ValidateUserHasEmail(updatedUser);
 
-      var user = _databaseClient.GetDocumentByExpression<UserModel>(_databaseName, _userCollectionName, u => u.Email == userModel.Email);
-      if (user == null)
+      var user = await _databaseClient.GetDocumentByExpression<UserModel>(_databaseName, _userCollectionName, u => u.Email == updatedUser.Email);
+
+      // update the fields I want to update from the incoming model
+      if (!updatedUser.FirstName.IsNullOrWhitespace())
       {
+        user.FirstName = updatedUser.FirstName;
       }
 
-      return user;
+      if (!updatedUser.LastName.IsNullOrWhitespace())
+      {
+        user.LastName = updatedUser.LastName;
+      }
+
+      return await _databaseClient.UpdateDocument(_databaseName, _userCollectionName, user);
     }
 
-    public Task<UserModel> DeleteUser(string email)
+    public async Task DeleteIfExists(string email)
     {
       if (string.IsNullOrWhiteSpace(email))
       {
         throw new ArgumentException($"Parameter '{nameof(email)}' must have a value");
       }
 
-      throw new NotImplementedException();
+      var user = await _databaseClient.GetDocumentByExpression<UserModel>(_databaseName, _userCollectionName, u => u.Email == email);
+      if (user != null)
+      {
+        await _databaseClient.DeleteDocument(_databaseName, _userCollectionName, user.Id);
+      }
     }
 
     private bool ValidateUserHasEmail(UserModel user)

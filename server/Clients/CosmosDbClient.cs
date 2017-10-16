@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CosmosDbDemo.Server.Constants;
 using CosmosDbDemo.Server.Options;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
@@ -30,11 +31,13 @@ namespace CosmosDbDemo.Server.Clients
       _documentClient = documentClient;
     }
 
-    public void Initialize()
+    public async Task Initialize()
     {
+      await CreateDatabaseIfDoesntExist(_options.Databases.CosmosDbDemo);
+      await CreateCollectionIfDoesntExist(_options.Databases.CosmosDbDemo, DatabaseConstants.DatabaseNames.Users);
     }
 
-        public async Task CreateDatabaseIfDoesntExist(string databaseName)
+    public async Task CreateDatabaseIfDoesntExist(string databaseName)
     {
       _logger.LogInformation($"CreateCollectionIfDoesntExist: databaseName: ${databaseName}");
       try
@@ -119,6 +122,11 @@ namespace CosmosDbDemo.Server.Clients
       }
 
       return result;
+    }
+
+    public async Task DeleteDocument(string databaseName, string collectionName, string documentId)
+    {
+      await _documentClient.DeleteDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, documentId));
     }
   }
 }
