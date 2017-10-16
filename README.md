@@ -1,30 +1,23 @@
 # Cosmos DB Demo
 
-This repository contains a demo of the various ways to use Microsoft's [Azure CosmosDB](https://azure.microsoft.com/en-us/services/cosmos-db/) and includes a simple React front end.
+This repository contains a demo using Microsoft's [Azure CosmosDB](https://azure.microsoft.com/en-us/services/cosmos-db/) to build a simple ASPNET Core API for updating and creating user profiles.
 
 ## Getting Started
 
 You need to install the following on your computer:
 
-- [Node.js](https://nodejs.org) >= 8
 - [Visual Studio Code](https://code.visualstudio.com/) or [Visual Studio 2017](https://www.visualstudio.com/)
 - [.NET Core](https://www.microsoft.com/net/core#windowscmd) >= 2 (this packaged with Visual Studio 2017)
 - [DocumentDB Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator)
 
-If you environment is set up correctly you should be able to run the following commands on the command line and get the output:
+If you environment is set up correctly you should be able to run the following command on the command line and get the output:
 
 ``` bash
-node -v
-# v8.2.0
 dotnet --version
 # 2.0.0
 ```
 
-## Running the app
-
-You will need to run the server and the front end together on your machine.
-
-### Server
+## Running the API
 
 To run the server in a few ways:
 
@@ -38,12 +31,3 @@ To run the server in a few ways:
   ```
 
   > *NOTE:* you will also need to set the environment variable `ASPNETCORE_ENVIRONMENT` to `Development` if you want to run the server from the command line.
-
-### Front end
-
-Open the root folder on the command line and rung the following:
-
-```bash
-cd client
-npm start
-```
