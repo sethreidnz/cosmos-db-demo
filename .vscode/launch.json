@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/server/bin/Debug/netcoreapp2.0/CosmosDbDemo.Server.dll",
+            "program": "${workspaceRoot}/CosmosDbDemo.Server/bin/Debug/netcoreapp2.0/CosmosDbDemo.Server.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/server",
+            "cwd": "${workspaceRoot}/CosmosDbDemo.Server",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

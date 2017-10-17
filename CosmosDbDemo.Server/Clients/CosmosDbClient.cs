@@ -39,35 +39,16 @@ namespace CosmosDbDemo.Server.Clients
 
     public async Task CreateDatabaseIfDoesntExist(string databaseName)
     {
-      _logger.LogInformation($"CreateCollectionIfDoesntExist: databaseName: ${databaseName}");
-      try
-      {
         await _documentClient.CreateDatabaseIfNotExistsAsync(new Database { Id = databaseName });
-      }
-      catch (Exception e)
-      {
-        _logger.LogCritical(e, $"CreateDatabaseIfDoesntExist: databaseName: ${databaseName}, message:; {e.Message}");
-        throw;
-      }
     }
 
     public async Task CreateCollectionIfDoesntExist(string databaseName, string collectionName)
     {
-      _logger.LogInformation($"CreateCollectionIfDoesntExist: databaseName: ${databaseName}, collectionName: {collectionName}");
-      try
-      {
         await _documentClient.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(databaseName), new DocumentCollection { Id = collectionName });
-      }
-      catch (Exception e)
-      {
-        _logger.LogCritical(e, $"CreateCollectionIfDoesntExist: databaseName: ${databaseName}, collectionName: {collectionName},  message:; {e.Message}");
-        throw;
-      }
     }
 
     public async Task<T> CreateDocument<T>(string databaseName, string collectionName, T document)
     {
-      _logger.LogInformation($"CreateDocument: databaseName: ${databaseName}, collectionName: {collectionName}");
       var newDocument = await _documentClient.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, collectionName), document);
       var createdDocument = (T)(dynamic)newDocument.Resource;
       return createdDocument;
@@ -76,7 +57,6 @@ namespace CosmosDbDemo.Server.Clients
     public async Task<T> UpdateDocument<T>(string databaseName, string collectionName, T document)
       where T : EntityModel
     {
-      _logger.LogInformation($"CreateDocument: databaseName: ${databaseName}, collectionName: {collectionName}");
       var result = await _documentClient.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, collectionName, document.Id), document);
       return (T)(dynamic)result.Resource;
     }
@@ -103,8 +83,6 @@ namespace CosmosDbDemo.Server.Clients
 
     public async Task<T> GetDocumentByExpression<T>(string databaseName, string collectionName, Expression<Func<T, bool>> expression)
     {
-      _logger.LogInformation($"GetDocument: databaseName: ${databaseName}, collectionName: {collectionName}");
-
       FeedOptions queryOptions = new FeedOptions { MaxItemCount = 1 };
       IDocumentQuery<T> query = _documentClient.CreateDocumentQuery<T>(UriFactory.CreateDocumentCollectionUri(databaseName, collectionName), queryOptions)
                                   .Where(expression)

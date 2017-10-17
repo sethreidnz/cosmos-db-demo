@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/server/CosmosDbDemo.Server.csproj"
+                "${workspaceRoot}/CosmosDbDemo.Server/CosmosDbDemo.Server.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
