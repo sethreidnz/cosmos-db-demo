@@ -17,7 +17,7 @@ namespace CosmosDbDemo.Server.Controllers
 
     // GET api/profile/me
     [HttpGet("{email}")]
-    public async Task<IActionResult> GetUser(string email)
+    public async Task<IActionResult> Get(string email)
     {
       var user = await _userService.GetUserByEmail(email);
       if (user == null)
@@ -40,6 +40,12 @@ namespace CosmosDbDemo.Server.Controllers
     [HttpPut("{email}")]
     public async Task<IActionResult> Put(string email, [FromBody]UserModel updatedUser)
     {
+      var user = await _userService.GetUserByEmail(email);
+      if (user == null)
+      {
+        return NotFound(email);
+      }
+
       updatedUser = await _userService.UpdateUser(updatedUser);
       return Ok(updatedUser);
     }

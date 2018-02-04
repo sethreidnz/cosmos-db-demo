@@ -86,7 +86,7 @@ namespace CosmosDbDemo.Server.Services
       }
     }
 
-    private bool ValidateUserHasEmail(UserModel user)
+    private static bool ValidateUserHasEmail(UserModel user)
     {
       if (string.IsNullOrWhiteSpace(user.Email))
       {

@@ -17,7 +17,7 @@ namespace CosmosDbDemo.Server
       builder.Register(c =>
       {
         var cosmosDbClient = c.Resolve<IOptions<CosmosDbOptions>>().Value;
-        return new DocumentClient(new Uri(cosmosDbClient.EndpointUri), cosmosDbClient.PrimaryKey);
+        return new DocumentClient(cosmosDbClient.EndpointUri, cosmosDbClient.PrimaryKey);
       }).SingleInstance();
 
       // create the DocumentDB client and initialize it

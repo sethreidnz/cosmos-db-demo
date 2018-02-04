@@ -1,8 +1,10 @@
-﻿namespace CosmosDbDemo.Server.Options
+﻿using System;
+
+namespace CosmosDbDemo.Server.Options
 {
   public class CosmosDbOptions
   {
-    public string EndpointUri { get; set; }
+    public Uri EndpointUri { get; set; }
 
     public string PrimaryKey { get; set; }
 

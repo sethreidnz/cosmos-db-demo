@@ -62,7 +62,7 @@ namespace CosmosDbDemo.Server
       loggerFactory.AddConsole(Configuration.GetSection("Logging"));
       loggerFactory.AddDebug();
 
-      if (HostingEnvironment.IsDevelopment())
+      if (env.IsDevelopment())
       {
         app.UseCors("AllowAll");
       }

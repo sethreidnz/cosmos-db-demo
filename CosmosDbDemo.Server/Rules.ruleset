@@ -11,9 +11,11 @@
     <Rule Id="SA1633" Action="None" />
     <Rule Id="SA1649" Action="None" />
     <Rule Id="SA1652" Action="None" />
-    <Rule Id="CA1001" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.Usage" RuleNamespace="Microsoft.Usage">
     <Rule Id="CA2235" Action="None" />
+    <Rule Id="CA1001" Action="None" />
+    <Rule Id="CA2007" Action="None" />
+    <Rule Id="CA1034" Action="None" />
   </Rules>
 </RuleSet>
